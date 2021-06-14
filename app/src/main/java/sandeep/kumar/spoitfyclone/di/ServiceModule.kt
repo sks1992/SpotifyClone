@@ -12,6 +12,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ServiceComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ServiceScoped
+import sandeep.kumar.spoitfyclone.data.remote.MusicDataBase
 
 @InstallIn(ServiceComponent::class)
 @Module
@@ -30,8 +31,8 @@ object ServiceModule {
     fun provideExoPlayer(
         @ApplicationContext context: Context,
         audioAttributes: AudioAttributes
-    ) =SimpleExoPlayer.Builder(context).build().apply {
-        setAudioAttributes(audioAttributes,true)
+    ) = SimpleExoPlayer.Builder(context).build().apply {
+        setAudioAttributes(audioAttributes, true)
         setHandleAudioBecomingNoisy(true)
     }
 
@@ -40,5 +41,10 @@ object ServiceModule {
     @Provides
     fun provideDataSourceFactory(
         @ApplicationContext context: Context
-    ) = DefaultDataSourceFactory(context,Util.getUserAgent(context,"Spotify App"))
+    ) = DefaultDataSourceFactory(context, Util.getUserAgent(context, "Spotify App"))
+
+    @ServiceScoped
+    @Provides
+    fun provideMusicDataBase() = MusicDataBase()
+
 }
